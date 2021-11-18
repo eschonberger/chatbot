@@ -3,8 +3,19 @@
 #Para poder generar esperas de tiempo e interactuar con el OS
 import time, os
 
+#Para pintar la pantalla
+import colorama
+from colorama import Fore
+from colorama import Back
+from colorama import Style
+
+
 #Para obtener numeros random
 from random import randint, randrange
+from colorama.ansi import clear_screen
+
+# librería útil para requerir mediante http
+import requests
 
 def esNum( dado_objeto ):
 	try:
@@ -78,7 +89,7 @@ def procesarPreguntandoNombre (usuario_dijo, tema):
     print("No hemos encontrado significado.....quizas no eres de este mundo ;-)")
     
   #Limpia la pantalla
-  time.sleep(4)
+  time.sleep(6)
   os.system('cls')
   
   return ("Te gusta el Futbol?: ", "preguntando futbol", usuario_dijo)
@@ -94,7 +105,7 @@ def procesarPreguntandoFutbol (usuario_dijo, tema):
     print("A mi tampoco, mucha plata derrochada....")
       
   #Limpia la pantalla
-  time.sleep(2)
+  time.sleep(3)
   os.system('cls')
   
   #Manda Propaganda
@@ -114,12 +125,12 @@ def procesarPreguntandoMilanesa (usuario_dijo, tema):
     print("Es mejor cuidar la salud y comer mas verduras...")
       
   #Limpia la pantalla
-  time.sleep(2)
+  time.sleep(3)
   os.system('cls')
   
   #Manda Propaganda
   print("BODEGON NUÑEZ ~ * ARRIBEÑOS 3198 - CABA ")
-  time.sleep(2)
+  time.sleep(3)
   os.system('cls')
 
   return ("Te gusta la Coca Cola?: ", "preguntando cocaCola", milanesa)
@@ -136,12 +147,12 @@ def procesarPreguntandoCocaCola (usuario_dijo, tema):
     print("Es mejor no tomar mas el veneno negro")
       
   #Limpia la pantalla
-  time.sleep(2)
+  time.sleep(3)
   os.system('cls')
   
   #Manda Propaganda
   print("20% DE DESCUENTO EN BEBIDAS  ~ * CARREFOUR!!!")
-  time.sleep(2)
+  time.sleep(3)
   os.system('cls')
 
   return ("Te gusta la Magia?: ", "preguntando magia", coca)
@@ -154,17 +165,17 @@ def procesarPreguntandoMagia (usuario_dijo, tema):
   if usuario_dijo == "si":
     magia="si"
     print("Pensa un numero entre 1 y 9.....")
-    time.sleep(4)
+    time.sleep(7)
     print("Sumale 5")
-    time.sleep(4)
+    time.sleep(7)
     print("Multiplica el resultado por 2")
-    time.sleep(4)
+    time.sleep(7)
     print("Restale 4.....")
-    time.sleep(4)
+    time.sleep(7)
     print("Dividilo por 2.....")
-    time.sleep(4)
+    time.sleep(7)
     print("Restale el numero que pensaste.....")
-    time.sleep(5)
+    time.sleep(7)
     print("""
                       .
 
@@ -184,7 +195,7 @@ def procesarPreguntandoMagia (usuario_dijo, tema):
 _/j  L l\_!  _//^---^\\_    
     """)
     print("El resultado es : --->3<---" )
-    time.sleep(4)
+    time.sleep(6)
     
   elif usuario_dijo == "no":
     print("Menos, mal me salve de hacer un papelon")
@@ -193,30 +204,248 @@ _/j  L l\_!  _//^---^\\_
   time.sleep(2)
   os.system('cls')
   
-  return ("Jugamos un partidito en la Play? : ", "preguntando play", magia)
+  return ("Te gustaria ver productos Magicos? : ", "preguntando tienda", magia)
 
+###ESPECIALIZACION TIENDA MAGICA
 
 #7ta Pregunta
-def procesarPreguntandoPlay (usuario_dijo, tema):
-  play="no"
-  usuario_dijo = usuario_dijo.lower()
-  if usuario_dijo == "si":
-    print("Okey, le digo a ALEXA que encienda la Play")
-    play="si"
-  elif usuario_dijo == "no":
-    print("Uhhh que aburrid@....Me voy a dormir, nos vemos mañana....zzzzzz")
+def procesarPreguntandoTienda (usuario_dijo, tema):
+  if usuario_dijo=="no":
+    apiClima()
     exit()
-      
-  #Limpia la pantalla
-  time.sleep(2)
-  os.system('cls')
-  
-  #Iniciando la Play
-  print("SONY PLAYSTATION - INICIANDO..... ")
-  time.sleep(4)
-  
-  exit()
+  else:
+    menu()
+    
 
+#MENU
+
+def menu():
+  Articulos = ["🃏 Cartas","฿ Monedas","🎓 Cursos"]
+
+  print(f"{Fore.BLUE}----->B@zar MAGICO<-----")
+  for items in Articulos:
+    print(items)
+
+  seleccion = input("Indica el articulo sobre el cual queres ver mas detalles: ")
+  seleccion = seleccion.lower()
+
+#Seleccion x la Cartas
+  if (seleccion=="carta" or seleccion=="cartas"):
+    mostrarCartas()
+    seleccioncarta = input(f"{Fore.YELLOW}Desea ver mas informacion o el Precio: ")
+    seleccioncarta = seleccioncarta.lower()
+    
+    if (seleccioncarta=="detalle" or seleccioncarta=="detalles" or seleccioncarta=="info" or seleccioncarta=="informacion"):
+      infoCartas()
+      
+    elif (seleccioncarta=="precio" or seleccioncarta=="costo"):
+      precioCartas()
+    
+    elif (seleccioncarta=="salir" or seleccioncarta=="exit"):
+      apiClima()
+      exit()
+      
+
+#Seleccion x las Monedas  
+  elif (seleccion=="moneda") or (seleccion=="monedas"):
+    mostrarMonedas()
+    seleccionmoneda = input("Desea ver mas informacion o el Precio: ")
+    seleccionmoneda = seleccionmoneda.lower()
+    
+    if (seleccionmoneda=="detalle" or seleccionmoneda=="detalles" or seleccionmoneda=="info" or seleccionmoneda=="informacion"):
+      infoMonedas()
+      
+    elif (seleccionmoneda=="precio" or seleccionmoneda=="costo"):
+      precioMonedas()
+    
+    elif (seleccionmoneda=="salir" or seleccionmoneda=="exit"):
+      apiClima()
+      exit()
+
+#Seleccion de los Cursos    
+  elif (seleccion=="curso" or seleccion=="cursos"):
+    mostrarCursos()
+    seleccioncurso = input("Desea ver mas informacion o el Precio: ")
+    seleccioncurso = seleccioncurso.lower()
+    
+    if (seleccioncurso=="detalle" or seleccioncurso=="detalles" or seleccioncurso=="info" or seleccioncurso=="informacion"):
+      infoCursos()
+      
+    elif (seleccioncurso=="precio" or seleccioncurso=="costo"):
+      precioCursos()
+    
+    elif (seleccioncurso=="salir" or seleccioncurso=="exit"):
+      apiClima()
+      exit()
+  
+  elif (seleccion=="salir" or seleccion=="exit"):
+    apiClima()
+    exit()
+
+
+
+#Funciones de las Cartas 
+def mostrarCartas():
+  os.system('cls')
+  print(f"{Fore.RED}🂡 Baraja Bicycle - Poker\n")
+  print("🃏 Baraja Moonshine Midnight por Enigma Ltd\n")
+  print("🃠 Baraja Tally Ho\n")
+
+def infoCartas():
+  os.system('cls')
+  print("✓ Baraja Bicycle - Poker")
+  print("\tEl mejor mazo de naipes para magia. Cartas de poker de la mejor calidad. Disponible en Azul y Rojo. \n")
+      
+  print("✓ Baraja Moonshine Midnight por Enigma Ltd")
+  print("\tApartándose del aspecto genérico de las cartas actuales, el objetivo es que vuelvas a una época de pandillas y muñecas, a los antros y bares llenos de humo de la América de los años 20.\n")
+
+  print("✓ Baraja Tally Ho")
+  print("\tEste es un diseño clásico Tally-Ho en verde con la impresión a todo color.\n")
+      
+  seleccioncarta = input("Desea ver el Precio: ")
+  seleccioncarta = seleccioncarta.lower()
+  if (seleccioncarta=="si" or seleccioncarta=="dale"):
+    precioCartas()
+  
+  #Retorna al Menu
+  menu()
+
+def precioCartas():
+  os.system('cls')
+  print("✓ Baraja Bicycle - Poker")
+  print("\tPrecio: $935")
+  print("\tLink: https://trucosymagia.com/barajas-de-poker/90-28-baraja-de-poker-bicycle.html#/2-color-azul\n")
+      
+  print("✓ Baraja Moonshine Midnight por Enigma Ltd")
+  print("\tPrecio: $150")
+  print("\tLink: https://trucosymagia.com/barajas-de-poker/499-baraja-moonshine-midnight-por-enigma-ltd.html\n")
+
+  print("✓ Baraja Tally Ho")
+  print("\tPrecio: $320")
+  print("\tLink: https://trucosymagia.com/barajas-de-poker/490-baraja-tally-ho-verde.html\n")
+  time.sleep(3)
+#Retorna al Menu
+  menu()
+
+#Funciones de las Monedas
+def mostrarMonedas():
+  os.system('cls')
+  print("฿ Cascarilla Expandida Nacional")
+  print("฿ Moneda Mordida Medio Dolar")
+  print("฿ Flipper Medio Dolar")
+
+
+
+def infoMonedas():
+  os.system('cls')
+  print("✓ Cascarilla Expandida Nacional")
+  print("\tMiles de rutinas se podrán realizar con este accesorio. Efectos de moneda a través de la mano o de billete y muchas rutinas más.\n")
+
+  print("✓ Moneda Mordida Medio Dolar")
+  print("\tEl mago enseña una moneda, la muerde y le arranca un pedazo. Abre su boca y muestra el pedazo entre sus dientes, lo lanza sobre la moneda y el pedazo vuelve mágicamente a su lugar. Quedando la moneda como nueva.\n")
+  
+  print("✓ Flipper Medio Dolar")
+  print("\tEl mago enseña dos monedas de iguales, las coloca en la palma de su mano, cierra la misma e increíblemente al abrirla una de ellas ha desaparecido.\n")
+  
+  seleccionmoneda = input("Desea ver el Precio: ")
+  seleccionmoneda = seleccionmoneda.lower()
+  if (seleccionmoneda=="si" or seleccionmoneda=="dale"):
+    precioMonedas()
+  
+  #Retorna al Menu
+  menu()
+
+
+
+
+def precioMonedas():
+  os.system('cls')
+  print(f"{Fore.GREEN}✓ Cascarilla Expandida Nacional")
+  print("\tPrecio: $2200")
+  print("\tLink: https://trucosymagia.com/monedas-trucadas/152-cascarilla-expandida-50-cents-nacional.html\n")
+      
+  print("✓ Moneda Mordida Medio Dolar")
+  print("\tPrecio: $2200")
+  print("\tLink: https://trucosymagia.com/monedas-trucadas/311-moneda-mordida-medio-dolar-sistema-interno.html\n")
+
+  print("✓ Flipper Medio Dolar")
+  print("\tPrecio: $1980")
+  print("\tLink: https://trucosymagia.com/monedas-trucadas/144-scotch-and-soda-nacional.html\n")
+  time.sleep(3)
+  
+#Retorna al Menu
+  menu()
+
+
+#####Funciones de los cursos
+
+def mostrarCursos():
+  os.system('cls')
+  print(f"{Fore.RED}🂡 Magia Inicial\n")
+  print("🃏 Magia Intermedia\n")
+  print("🃠 Magia Avanzada\n")
+
+def infoCursos():
+  os.system('cls')
+  print("✓ Baraja Bicycle - Poker")
+  print("\tPosición de agarre de una baraja, como cortar, mezclar, buscar, distribuir y manejar cartas. Florituras básicas. Teorías de la Magia\n")
+      
+  print("✓ Magia Intermedia")
+  print("\tTécnicas Cartomágicas I. Técnicas Numismagia I. El humor en la magia. Teoría de tipos de Efecto. Ilusiones con todo tipo de elementos, naipes, sogas, monedas, papeles, velocidad mental, control mental, explosiones. \n")
+
+  print("✓ Magia Avanzada")
+  print("\tTécnica Cartomágica II y Técnica Numismagica II. Conceptos de 'One Ahead' y elección del mago. Psicología aplicada a los espectadores. Gags Mágicos.\n")
+      
+  seleccioncurso = input("Desea ver el Precio: ")
+  seleccioncurso = seleccioncurso.lower()
+  if (seleccioncurso=="si" or seleccioncurso=="dale"):
+    precioCursos()
+  
+  #Retorna al Menu
+  menu()
+
+def precioCursos():
+  os.system('cls')
+  print("✓ Magia Inicial")
+  print("\tPrecio: $9035")
+  print("\tLink: https://trucosymagia.com/cursos/nivel-inicial.html\n")
+      
+  print("✓ Magia Intermedia")
+  print("\tPrecio: $15000")
+  print("\tLink: https://trucosymagia.com/cursos/nivel-intermedio.html\n")
+
+  print("✓ Magia Avanzada")
+  print("\tPrecio: $32000")
+  print("\tLink: https://trucosymagia.com/cursos/nivel-avanzado.html\n")
+  time.sleep(3)
+#Retorna al Menu
+  menu()
+
+
+
+def apiClima():
+  
+  def asesoraClima(temp):
+    if temp <10:
+        return "lleva abrigo, hace frio"
+    elif temp <20:
+        return "lleva pullover, esta freco"
+    else:
+        return "sali tranqui en remera"
+
+  strApi = "https://api.open-meteo.com/v1/forecast?latitude=-34.6118&longitude=-58.4173&current_weather=true"
+
+  # Conectamos a http  mediante método GET, el mismo de formularios
+  recuperado = requests.get(strApi)
+
+  # Devuelve un diccionario. A cada dato accedemos mediante .get() de obtener
+  recuperadoEnJson = recuperado.json()
+
+  temperatura = recuperadoEnJson.get("current_weather" ).get("temperature")
+
+  resultado = asesoraClima(int(temperatura))
+
+  print( "Ahora mismo hace {}º, {}.".format( temperatura, resultado) )
 
 
 def contarChiste():
@@ -236,7 +465,7 @@ def saludarxHorario():
     print("Buenas Tardes")
   else:
     print("Buenos Dias")
-  print("""
+  print(f"""{Fore.GREEN}
              ,\ 
              \\\,_
               \` ,\ 

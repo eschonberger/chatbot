@@ -7,7 +7,7 @@ futbol = "no"
 milanesa = "no"
 coca = "no"
 magia ="no"
-play="no"
+tienda="no"
 
 #Saluda al usuario basandose en la Hora
 saludarxHorario()
@@ -26,8 +26,8 @@ while not usuario_dijo == "salir":
       (siguiente_pregunta, tema, coca) = procesarPreguntandoCocaCola( usuario_dijo, tema )      #Publicidad
   elif tema == "preguntando magia":
       (siguiente_pregunta, tema, magia) = procesarPreguntandoMagia( usuario_dijo, tema )    #Hace un truco matematico
-  elif tema == "preguntando play":
-      (siguiente_pregunta, tema, play) = procesarPreguntandoPlay( usuario_dijo, tema ) # Inicia la play 
+  elif tema == "preguntando tienda":
+      (siguiente_pregunta, tema, tienda) = procesarPreguntandoTienda( usuario_dijo, tema ) # Inicia Consultas de la tienda de Magia
     
             
 
